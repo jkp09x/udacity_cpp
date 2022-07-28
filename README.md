@@ -1,5 +1,14 @@
 # Udacity C++ Nanodegree Projects
 
+## TASK LIST
+- [ ] Project 1
+- [ ] Project 2
+- [ ] Project 3
+- [ ] Project 4
+- [ ] Project 5
+
+# PROJECT DESCRIPTIONS
+
 ### Project 1: Route Planner
 Used OpenStreetMap data along with IOD2 visualization library to build a route planner that finds. path between two points on a real-world map.
 
@@ -14,3 +23,5 @@ Built a multithreaded traffic simulator using a real urban map. Run each vehicle
 
 ### Project 5: Capstone Project
 To Be Decided
+
+
