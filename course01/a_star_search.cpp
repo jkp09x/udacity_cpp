@@ -42,7 +42,13 @@ vector<vector<State>> ReadBoardFile(string path) {
   return board;
 }
 
-// Write the Search function stub here.
+// Heuristic function using Manhattan Distance.
+int Heuristic(const int x1, const int y1, const int x2, const int y2)
+{
+  return abs(x2-x1) + abs(y2-y1);
+}
+
+// TODO: Write the Search function stub here.
 vector<vector<State>> Search(const vector<vector<State>> board,
                              const int startPoint[2],
                              const int endPoint[2])
