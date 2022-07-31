@@ -43,7 +43,7 @@ vector<vector<State>> ReadBoardFile(string path) {
 }
 
 // Heuristic function using Manhattan Distance.
-int Heuristic(const int x1, const int y1, const int x2, const int y2)
+int Heuristic(const int& x1, const int& y1, const int& x2, const int& y2)
 {
   return abs(x2-x1) + abs(y2-y1);
 }
@@ -53,8 +53,7 @@ void AddToOpen(const int& x, const int& y, const int& g, const int& h,
                vector<vector<int>>& openNodes,
                vector<vector<State>>& grid)
 {
-  vector<int> node = {x, y, g, h};
-  openNodes.push_back(node);
+  openNodes.push_back(vector<int>{x, y, g, h});
   grid[x][y] = State::kClosed;
 }
 
