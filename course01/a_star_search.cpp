@@ -10,7 +10,7 @@ using std::string;
 using std::vector;
 using std::abs;
 
-enum class State {kEmpty, kObstacle};
+enum class State {kEmpty, kObstacle, kClosed};
 
 
 vector<State> ParseLine(string line) {
@@ -46,6 +46,16 @@ vector<vector<State>> ReadBoardFile(string path) {
 int Heuristic(const int x1, const int y1, const int x2, const int y2)
 {
   return abs(x2-x1) + abs(y2-y1);
+}
+
+// Add a node to the open list and mark it as open.
+void AddToOpen(const int& x, const int& y, const int& g, const int& h,
+               vector<vector<int>>& openNodes,
+               vector<vector<State>>& grid)
+{
+  vector<int> node = {x, y, g, h};
+  openNodes.push_back(node);
+  grid[x][y] = State::kClosed;
 }
 
 // TODO: Write the Search function stub here.
