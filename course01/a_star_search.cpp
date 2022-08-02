@@ -1,3 +1,4 @@
+#include <algorithm> // for sorting the open vector
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -9,6 +10,7 @@ using std::istringstream;
 using std::string;
 using std::vector;
 using std::abs;
+using std::sort;
 
 enum class State {kEmpty, kObstacle, kClosed};
 
@@ -42,6 +44,7 @@ vector<vector<State>> ReadBoardFile(string path) {
   return board;
 }
 
+
 // Function to compare the f-value of two nodes here.
 // vector format: x, y, g, h
 bool Compare(const vector<int>& n1, const vector<int>& n2)
@@ -52,11 +55,20 @@ bool Compare(const vector<int>& n1, const vector<int>& n2)
   return f1 > f2;
 }
 
+
+// Sort vector in desc order
+void CellSort(vector<vector<int>> *v)
+{
+  sort(v->begin(), v->end(), Compare);
+}
+
+
 // Heuristic function using Manhattan Distance.
 int Heuristic(const int& x1, const int& y1, const int& x2, const int& y2)
 {
   return abs(x2-x1) + abs(y2-y1);
 }
+
 
 // Add a node to the open list and mark it as open.
 void AddToOpen(const int& x, const int& y, const int& g, const int& h,
@@ -66,6 +78,7 @@ void AddToOpen(const int& x, const int& y, const int& g, const int& h,
   openNodes.push_back(vector<int>{x, y, g, h});
   grid[x][y] = State::kClosed;
 }
+
 
 // TODO: Write the Search function stub here.
 vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2])
@@ -84,6 +97,7 @@ vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2
   cout << "No path found!\n";
   return vector<vector<State>> {};
 }
+
 
 string CellString(State cell) {
   switch(cell) {
