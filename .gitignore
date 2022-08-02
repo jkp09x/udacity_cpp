@@ -33,4 +33,4 @@
 
 # User files
 tmux*
-!*.*
+*.swp
