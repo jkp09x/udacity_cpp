@@ -12,8 +12,10 @@ using std::vector;
 using std::abs;
 using std::sort;
 
-enum class State {kEmpty, kObstacle, kClosed, kPath};
+enum class State {kEmpty, kObstacle, kClosed, kPath, kStart, kFinish};
 
+// directional deltas
+const int delta[4][2]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
 
 vector<State> ParseLine(string line) {
     istringstream sline(line);
@@ -70,6 +72,16 @@ int Heuristic(const int& x1, const int& y1, const int& x2, const int& y2)
 }
 
 
+// Check that the cell is on the grid and not an obstacle (i.e. equals kEmpty).
+bool CheckValidCell(const int& x, const int& y, const vector<vector<State>>& grid)
+{
+  if ((x >= 0 && x < grid.size()) && (y >= 0 && y < grid[0].size()))
+    return grid[x][y] == State::kEmpty;
+
+  return false;
+}
+
+
 // Add a node to the open list and mark it as open.
 void AddToOpen(const int& x, const int& y, const int& g, const int& h,
                vector<vector<int>>& openNodes,
@@ -80,12 +92,36 @@ void AddToOpen(const int& x, const int& y, const int& g, const int& h,
 }
 
 
-// TODO: Write the Search function stub here.
+void ExpandNeighbors(const vector<int> curNode,
+                     const int goal[2],
+                     vector<vector<int>>& openList,
+                     vector<vector<State>>& grid)
+{
+  int x = curNode[0];
+  int y = curNode[1];
+  int g = curNode[2];
+
+  // Loop through current node's neighbors
+  for(int i = 0; i < 4; i++) 
+  {
+    int x2 = x + delta[i][0];
+    int y2 = y + delta[i][1];
+
+    if (CheckValidCell(x2, y2, grid))
+    {
+      int g2 = g + 1;
+      int h2 = Heuristic(x2, y2, goal[0], goal[1]);
+      AddToOpen(x2, y2, g2, h2, openList, grid);
+    }
+  }
+}
+
+
 vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2])
 {
   // Create the vector of open nodes.
   vector<vector<int>> open {};
-  
+
   // Initialize the starting node.
   int x1 = init[0];
   int y1 = init[1];
@@ -99,14 +135,19 @@ vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2
   {
     CellSort(&open);
     auto curNode = open.back();
+    open.pop_back();
     int x = curNode[0];
     int y = curNode[1];
     grid[x][y] = State::kPath;
 
     if (x == goal[0] && y == goal[1])
+    {
+      grid[init[0]][init[1]] = State::kStart;
+      grid[goal[0]][goal[1]] = State::kFinish;
       return grid;
-    // TODO: If we're not done, expand search to current node's neighbors.
-    // Implement -> ExpandNeighbors
+    }
+
+    ExpandNeighbors(curNode, goal, open, grid);
   }
 
   cout << "No path found!\n";
@@ -117,6 +158,9 @@ vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2
 string CellString(State cell) {
   switch(cell) {
     case State::kObstacle: return "⛰️   ";
+    case State::kPath: return "🚗   ";
+    case State::kStart: return "🚦   ";
+    case State::kFinish: return "🏁   ";
     default: return "0   ";
   }
 }
