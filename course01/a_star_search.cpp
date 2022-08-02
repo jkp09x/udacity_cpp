@@ -12,7 +12,7 @@ using std::vector;
 using std::abs;
 using std::sort;
 
-enum class State {kEmpty, kObstacle, kClosed};
+enum class State {kEmpty, kObstacle, kClosed, kPath};
 
 
 vector<State> ParseLine(string line) {
@@ -94,6 +94,21 @@ vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2
   
   // Use AddToOpen to add the starting node to the open vector.
   AddToOpen(x1, y1, g, h, open, grid);
+
+  while(!open.empty())
+  {
+    CellSort(&open);
+    auto curNode = open.back();
+    int x = curNode[0];
+    int y = curNode[1];
+    grid[x][y] = State::kPath;
+
+    if (x == goal[0] && y == goal[1])
+      return grid;
+    // TODO: If we're not done, expand search to current node's neighbors.
+    // Implement -> ExpandNeighbors
+  }
+
   cout << "No path found!\n";
   return vector<vector<State>> {};
 }
