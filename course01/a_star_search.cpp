@@ -58,10 +58,19 @@ void AddToOpen(const int& x, const int& y, const int& g, const int& h,
 }
 
 // TODO: Write the Search function stub here.
-vector<vector<State>> Search(const vector<vector<State>> board,
-                             const int startPoint[2],
-                             const int endPoint[2])
+vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2])
 {
+  // Create the vector of open nodes.
+  vector<vector<int>> open {};
+  
+  // Initialize the starting node.
+  int x1 = init[0];
+  int y1 = init[1];
+  int g = 0;
+  int h = Heuristic(x1, y1, goal[0], goal[1]);
+  
+  // Use AddToOpen to add the starting node to the open vector.
+  AddToOpen(x1, y1, g, h, open, grid);
   cout << "No path found!\n";
   return vector<vector<State>> {};
 }
