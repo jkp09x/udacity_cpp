@@ -70,6 +70,16 @@ int Heuristic(const int& x1, const int& y1, const int& x2, const int& y2)
 }
 
 
+// Check that the cell is on the grid and not an obstacle (i.e. equals kEmpty).
+bool CheckValidCell(const int& x, const int& y, const vector<vector<State>>& grid)
+{
+  if (grid[x][y] == State::kEmpty && (grid[x][y] != State::kClosed || grid[x][y] != State::kObstacle))
+      return true;
+  else
+      return false;
+}
+
+
 // Add a node to the open list and mark it as open.
 void AddToOpen(const int& x, const int& y, const int& g, const int& h,
                vector<vector<int>>& openNodes,
