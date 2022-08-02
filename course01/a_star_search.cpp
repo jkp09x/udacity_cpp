@@ -42,6 +42,16 @@ vector<vector<State>> ReadBoardFile(string path) {
   return board;
 }
 
+// Function to compare the f-value of two nodes here.
+// vector format: x, y, g, h
+bool Compare(const vector<int>& n1, const vector<int>& n2)
+{
+  // f = g + h
+  int f1 = n1[2] + n1[3];
+  int f2 = n2[2] + n2[3];
+  return f1 > f2;
+}
+
 // Heuristic function using Manhattan Distance.
 int Heuristic(const int& x1, const int& y1, const int& x2, const int& y2)
 {
