@@ -10,3 +10,5 @@ Pointers and references can have similar use cases in C++. As seen previously bo
 References are generally easier and safer than pointers. As a decent rule of thumb, references should be used in place of pointers when possible.
 
 However, there are times when it is not possible to use references. One example is object initialization. You might like one object to store a reference to another object. However, if the other object is not yet available when the first object is created, then the first object will need to use a pointer, not a reference, since a reference cannot be null. The reference could only be initialized once the other object is created.
+
+### Reference: Udacity C++ Nanodegree: https://classroom.udacity.com/nanodegrees/nd213/parts/cd0423/modules/3eee5cd9-435a-4cd5-93f4-1debb1927e38/lessons/9ec1b68d-2202-4928-8d17-693a9dc015e3/concepts/dabb1be5-9191-4666-84d9-d64f67c17c74
