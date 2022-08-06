@@ -1,4 +1,4 @@
-References vs Pointers
+# References vs Pointers
 Pointers and references can have similar use cases in C++. As seen previously both references and pointers can be used in pass-by-reference to a function. Additionally, they both provide an alternative way to access an existing variable: pointers through the variable's address, and references through another name for that variable. But what are the differences between the two, and when should each be used? The following list summarizes some of the differences between pointers and references, as well as when each should be used:
 
 | REFERENCES | POINTERS |
