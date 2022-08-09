@@ -54,7 +54,9 @@ run project
 - https://github.com/cpp-io2d/P0267_RefImpl/blob/master/BUILDING.md
 - https://ssvaddiparthy.medium.com/setting-up-the-cppnd-route-planning-project-on-mac-751a6122fb78
 
-### Udacity Workspace Environment ```env``` command
+### Udacity Workspace 
+#### Environment Variables
+```env``` command
 ```
 HOSTNAME=ac4836a8055b
 TURTLEBOT_3D_SENSOR=asus_xtion_pro
@@ -101,3 +103,49 @@ LESSCLOSE=/usr/bin/lesspipe %s %s
 ROS_ETC_DIR=/opt/ros/kinetic/etc/ros
 _=/usr/bin/env
 ```
+
+#### io2d
+PWD: /usr/local/include/io2d/
+total 668
+drwxr-xr-x 2 root root  4096 May 29  2020 ./
+drwxrwxr-x 1 root root  4096 May 29  2020 ../
+-rw-r--r-- 1 root root  1907 May 29  2020 io2d.h
+-rw-r--r-- 1 root root   512 May 29  2020 io2d_cairo_xlib.h
+-rw-r--r-- 1 root root 21365 May 29  2020 test_process.h
+-rw-r--r-- 1 root root  5630 May 29  2020 test_renderer.h
+-rw-r--r-- 1 root root  2422 May 29  2020 xbrushes.h
+-rw-r--r-- 1 root root  3076 May 29  2020 xbrushes_impl.h
+-rw-r--r-- 1 root root 41431 May 29  2020 xcairo.h
+-rw-r--r-- 1 root root  5332 May 29  2020 xcairo_brushes_impl.h
+-rw-r--r-- 1 root root 15231 May 29  2020 xcairo_helpers.h
+-rw-r--r-- 1 root root 58730 May 29  2020 xcairo_paths_impl.h
+-rw-r--r-- 1 root root 17270 May 29  2020 xcairo_surface_state_props_impl.h
+-rw-r--r-- 1 root root 42130 May 29  2020 xcairo_surfaces_image_impl.h
+-rw-r--r-- 1 root root  6223 May 29  2020 xcairo_surfaces_impl.h
+-rw-r--r-- 1 root root 18607 May 29  2020 xcolor.h
+-rw-r--r-- 1 root root    43 May 29  2020 xdiagnostics.h
+-rw-r--r-- 1 root root 11040 May 29  2020 xgraphicsmath.h
+-rw-r--r-- 1 root root 25041 May 29  2020 xgraphicsmath_impl.h
+-rw-r--r-- 1 root root  9816 May 29  2020 xgraphicsmathfloat.h
+-rw-r--r-- 1 root root 24666 May 29  2020 xgraphicsmathfloat_impl.h
+-rw-r--r-- 1 root root   131 May 29  2020 xinput.h
+-rw-r--r-- 1 root root  2208 May 29  2020 xinterchangebuffer.h
+-rw-r--r-- 1 root root  4881 May 29  2020 xio2d.h
+-rw-r--r-- 1 root root   110 May 29  2020 xio2d_cairo_main.h
+-rw-r--r-- 1 root root   342 May 29  2020 xio2d_cairo_xlib_main.h
+-rw-r--r-- 1 root root 28051 May 29  2020 xio2d_cairo_xlib_output_surfaces.h
+-rw-r--r-- 1 root root  5572 May 29  2020 xio2d_cairo_xlib_surfaces.h
+-rw-r--r-- 1 root root 28002 May 29  2020 xio2d_cairo_xlib_surfaces_impl.h
+-rw-r--r-- 1 root root 14221 May 29  2020 xio2d_cairo_xlib_unmanaged_output_surfaces.h
+-rw-r--r-- 1 root root  7875 May 29  2020 xio2d_impl.h
+-rw-r--r-- 1 root root 24637 May 29  2020 xpath.h
+-rw-r--r-- 1 root root 47048 May 29  2020 xpath_impl.h
+-rw-r--r-- 1 root root 20396 May 29  2020 xpathbuilder_impl.h
+-rw-r--r-- 1 root root 23086 May 29  2020 xsurfaces.h
+-rw-r--r-- 1 root root  1607 May 29  2020 xsurfaces_enums.h
+-rw-r--r-- 1 root root 38741 May 29  2020 xsurfaces_impl.h
+-rw-r--r-- 1 root root 21055 May 29  2020 xsurfacesprops_impl.h
+-rw-r--r-- 1 root root   593 May 29  2020 xsystemheaders.h
+-rw-r--r-- 1 root root   131 May 29  2020 xtext.h
+
+
