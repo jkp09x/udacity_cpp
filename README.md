@@ -1,7 +1,7 @@
 # Udacity C++ Nanodegree Projects
 
 ## TASK LIST
-- [ ] Project 1
+- [x] Project 1 - passed
 - [ ] Project 2
 - [ ] Project 3
 - [ ] Project 4
