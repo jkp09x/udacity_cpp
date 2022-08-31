@@ -15,15 +15,22 @@ Directions
 #include <cmath>
 #include <stdexcept>
 
-// TODO: Define class Sphere
 class Sphere {
  public:
   // Constructor
+  Sphere(double rad) : radius_(rad) {};
 
   // Accessors
+  double Radius() const {
+    return radius_;
+  }
+  double Volume() const {
+    return (4/3.0 * 3.14 * radius_ * radius_ * radius_);
+  }
 
  private:
   // Private members
+  double radius_;
 };
 
 // Test
