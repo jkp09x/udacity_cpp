@@ -34,3 +34,4 @@
 # User files
 tmux*
 *.swp
+.DS_Store
