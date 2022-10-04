@@ -2,7 +2,7 @@
 
 ## TASK LIST
 - ✅ [Project 1 - Route Planning](https://github.com/jkp09x/udacity-route_planning)
-- 🚧 [Project 2 - System Monitor](https://github.com/jkp09x/udacity-system_monitor)
+- ✅ [Project 2 - System Monitor](https://github.com/jkp09x/udacity-system_monitor)
 - 🗓 [Project 3 - Memory Mgmt Chatbot]()
 - 🗓 [Project 4 - Traffic Simulation]()
 - 🗓 [Project 5 - Capstone]()
