@@ -2,15 +2,17 @@
 
 # PROJECTS
 - #### ✅ [Project 1 - Route Planning](https://github.com/jkp09x/udacity-route_planning)
-      Used OpenStreetMap data along with IOD2 visualization library to build a route planner that finds. path between two points on a real-world map.
+  Create a route planner that plots a path between two points on a map using real map data from the [OpenStreeMap project](https://www.openstreetmap.org/).
 - #### ✅ [Project 2 - System Monitor](https://github.com/jkp09x/udacity-system_monitor)
-      Created a system monitor (similar to Linux htop command) that shows what's happening on the computer: processes, id, CPU & Memory usage and much more using object-oriented C++ concepts.
+  Created a system monitor (similar to Linux htop command) that shows what's happening on the computer: processes, id, CPU & Memory usage and much more using object-oriented C++ concepts.
 - #### 🗓 [Project 3 - Memory Mgmt Chatbot]()
-      # TODO: Fill in details about the project
+  **Purpose:** In this project you will analyze and modify an existing ChatBot program, which is able to discuss some memory management topics based on the content of a knowledge base. The program can be executed and works as intended. However, no advanced concepts as discussed in this course have been used. There are no smart pointers, no move semantics and not much thought has been given on ownership and on memory allocation.
+  
+  **Your task:** Use the course knowledge to optimize the ChatBot program from a memory management perspective. There is a total of five tasks to be completed.
 - #### 🗓 [Project 4 - Traffic Simulation]()
-      Built a multithreaded traffic simulator using a real urban map. Run each vehicle on a separate thread, and manage intersections to facilitate traffic flow and avoid collisions.
+  Built a multithreaded traffic simulator using a real urban map. Run each vehicle on a separate thread, and manage intersections to facilitate traffic flow and avoid collisions.
 - #### 🗓 [Project 5 - Capstone]()
-      To Be Decided
+  To Be Decided
 
 ## FOUNDATIONS
 - Learn basic C++ syntax, functions, containers, and compiling and linking with multiple files. Use OpenStreetMap and the 2D visualization library IO2D to build a route planner that displays a path between two points on a map.
