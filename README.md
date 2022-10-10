@@ -9,6 +9,8 @@
   **Purpose:** In this project you will analyze and modify an existing ChatBot program, which is able to discuss some memory management topics based on the content of a knowledge base. The program can be executed and works as intended. However, no advanced concepts as discussed in this course have been used. There are no smart pointers, no move semantics and not much thought has been given on ownership and on memory allocation.
   
   **Your task:** Use the course knowledge to optimize the ChatBot program from a memory management perspective. There is a total of five tasks to be completed.
+  > :warning: Used the following instructions to install gdb on MAC: https://community.pivotal.io/s/article/The-x86-64-architecture-is-required-unsatisfied-requirement-failed-this-build-error-when-installing-cf-CLI-on-an-M1-MacBook?language=en_US
+
 - #### 🗓 [Project 4 - Traffic Simulation]()
   Built a multithreaded traffic simulator using a real urban map. Run each vehicle on a separate thread, and manage intersections to facilitate traffic flow and avoid collisions.
 - #### 🗓 [Project 5 - Capstone]()
