@@ -91,3 +91,28 @@ lscpu | grep Cache
 
    > **NOTE**
    > Relocating virtual swap file to a SSD Location would help with performance.
+
+## Variables and Memory
+### The Process Memory Model
+### Memory Allocation C++
+### Automatic Memory Allocation (The Stack)
+### Call-By-Value vs. Call-by-reference
+
+## Dynamic Memory Allocation (The Heap)
+### Heap Memory
+### Using malloc and free
+### Using new and delete
+### Typical Memory management problems
+### Memory leaks
+
+## Resource Copying Policies
+### Copy semantics
+### Lvalues and Rvalues
+### Move semantics
+### Using move semantics
+
+## Smart Pointers
+### Resource Acquisition is Initialization (RAII)
+### Smart Pointers
+### Transferring ownership
+### Importance of Scope
