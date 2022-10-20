@@ -1,6 +1,6 @@
 # Overview of Memory Types
 ## Cache
-[Cache](/images/cache_levels.png)
+![Cache](/images/cache_levels.png)
 ### L1 Cache
 - Fastest and smallest memory type, usually in 16 - 64 kB range
 - Separated into **instruction** (L1i) and **data** (L1d)
