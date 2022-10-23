@@ -110,7 +110,7 @@ We are unable to use the entire address space.
   - Memory for variables in segment is allocated once when a program is run and persists through its lifetime
 
   | Stack | Heap |
-  | --- | --- |
+  | :---: | :---: |
   | automatically allocated | dynamically allocated |
   | fixed memory size | theoretically no size limitations (limited by physically available memory) |
   | variables are allocated at compile-time | variables are allocated at run-time |
