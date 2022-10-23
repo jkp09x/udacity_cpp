@@ -136,8 +136,18 @@ We are unable to use the entire address space.
 - Stack is considered *thread-safe*
 - allocating/de-allocating memory is fast on the stack.
   - It only involves moving the stack pointer to a new position
-### Call-By-Value vs. Call-by-reference
-## Dynamic Memory Allocation (The Heap)
+### Dynamic Memory Allocation (The Heap)
+- Programmer can request allocation of memory by issuing a *malloc* or *new* command which will remain allocated until *free* or *delete* is called to cleanup the memory.
+- Variables are allocated at run-time
+
+| Stack | Heap |
+| --- | --- |
+| automatically allocated | dynamically allocated |
+| variables are allocated at compile time | variables are allocated at run-time |
+| OS automatically manages memory | programmer has to manage memory using *malloc/free* or *new/delete* |
+| thread-safe | |
+| limited scope based on entry/exit | scope available until address is known |
+
 ### Heap Memory
 ### Using malloc and free
 ### Using new and delete
