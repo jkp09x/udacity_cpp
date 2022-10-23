@@ -117,7 +117,6 @@ We are unable to use the entire address space.
   - Memory for variables in segment is allocated once when a program is run and persists through its lifetime
 - **Data**: this segments is similar to *BSS* with major difference being that variables in this segment have non-zero initialized values.
   - Memory for variables in segment is allocated once when a program is run and persists through its lifetime
-> **NOTE**
 > Decision between stack and heap comes down to application. Based on the application programmer must pick the best suited space and know the advantages & disadvantages.
 > By default **stack** should be the choice of memory since access is usually faster making memory management easier than the heap but has limited space and variables will only get deallocated when out of scope
 > **heap** is better suited when large memory storage is required i.e. images/videos etc. However, programmer needs to carefully manage memory, if not managed correctly it can lead to memory leaks or dangling pointers.
