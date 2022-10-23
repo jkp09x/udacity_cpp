@@ -134,6 +134,8 @@ We are unable to use the entire address space.
     - performed on the **heap** and only limited by the size of the address space
 ### Automatic Memory Allocation (The Stack)
 - Stack is considered *thread-safe*
+- allocating/de-allocating memory is fast on the stack.
+  - It only involves moving the stack pointer to a new position
 ### Call-By-Value vs. Call-by-reference
 ## Dynamic Memory Allocation (The Heap)
 ### Heap Memory
