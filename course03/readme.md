@@ -109,16 +109,18 @@ We are unable to use the entire address space.
   - **Data**: this segments is similar to *BSS* with major difference being that variables in this segment have non-zero initialized values.
   - Memory for variables in segment is allocated once when a program is run and persists through its lifetime
 
-  | Stack | Heap |
+
+  | STACK MEMORY | HEAP MEMORY |
   | :---: | :---: |
   | automatically allocated | dynamically allocated |
-  | fixed memory size | theoretically no size limitations (limited by physically available memory) |
+  | fixed memory size | theoretically no size limitations (limited by available memory) |
   | variables are allocated at compile-time | variables are allocated at run-time |
   | stores local variables & function inputs/outputs | |
   | very efficient since managed by OS | computationally more expensive than stack |
   | OS automatically manages memory | programmer has to manage memory using *malloc/free* or *new/delete* |
   | thread-safe, each thread has dedicated stack | shared between threads, need to account for concurrency |
   | limited scope based on entry/exit | scope available until address is known |
+  | stack memory is sequential therefore easy and secure | heap allocation/deallocations can occur arbitrarily therefore memory is fragmented overtime making it more difficult and expensive to manage. |
   > - Decision between stack and heap comes down to application. Based on the application programmer must pick the best suited space and know the advantages & disadvantages.
   > - By default **stack** should be the choice of memory since access is usually faster making memory management easier than the heap but has limited space and variables will only get deallocated when out of scope
   > - **heap** is better suited when large memory storage is required i.e. images/videos etc. However, programmer needs to carefully manage memory, if not managed correctly it can lead to memory leaks or dangling pointers.
@@ -136,6 +138,7 @@ We are unable to use the entire address space.
     - way for programs to request memory from the OS at runtime as needed
     - performed on the **heap** and only limited by the size of the address space
 
+## Dynamic Memory Allocation (The Heap)
 ### Heap Memory
 ### Using malloc and free
 ### Using new and delete
