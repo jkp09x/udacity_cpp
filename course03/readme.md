@@ -89,7 +89,6 @@ lscpu | grep Cache
 
    As can be seen, both processes have their own virtual memory space. Some of the pages are mapped to frames in the physical memory and some are not. If process 1 needs to use memory in the memory page that starts at address 0x1000, a page fault will occur if the required data is not there. The memory page will then be mapped to a vacant memory frame in physical memory. Also, note that the virtual memory addresses are not the same as the physical addresses. The first memory page of process 1, which starts at the virtual address 0x0000, is mapped to a memory frame that starts at the physical address 0x2000.
 
-   > **NOTE**
    > Relocating virtual swap file to a SSD Location would help with performance.
 
 ## Variables and Memory
@@ -117,11 +116,10 @@ We are unable to use the entire address space.
   - Memory for variables in segment is allocated once when a program is run and persists through its lifetime
 - **Data**: this segments is similar to *BSS* with major difference being that variables in this segment have non-zero initialized values.
   - Memory for variables in segment is allocated once when a program is run and persists through its lifetime
-> Decision between stack and heap comes down to application. Based on the application programmer must pick the best suited space and know the advantages & disadvantages.
+> - Decision between stack and heap comes down to application. Based on the application programmer must pick the best suited space and know the advantages & disadvantages.
+- By default **stack** should be the choice of memory since access is usually faster making memory management easier than the heap but has limited space and variables will only get deallocated when out of scope
+- **heap** is better suited when large memory storage is required i.e. images/videos etc. However, programmer needs to carefully manage memory, if not managed correctly it can lead to memory leaks or dangling pointers.
 
-> By default **stack** should be the choice of memory since access is usually faster making memory management easier than the heap but has limited space and variables will only get deallocated when out of scope
-
-> **heap** is better suited when large memory storage is required i.e. images/videos etc. However, programmer needs to carefully manage memory, if not managed correctly it can lead to memory leaks or dangling pointers.
 ### Memory Allocation C++
 - Types of memory Allocation
   - Static Memory Allocation
