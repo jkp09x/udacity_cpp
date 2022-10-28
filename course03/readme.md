@@ -150,11 +150,11 @@ pointer_name = (cast-type*) malloc(size);
   ```C++
   pointer_name = (cast-type*) realloc(pointer_name, new_size);
   ```
-1. ```calloc``` is used to dynamically allocate the specified number of blocks of memory of the specified type. Each block is initialized to zero.
+2. ```calloc``` is used to dynamically allocate the specified number of blocks of memory of the specified type. Each block is initialized to zero.
 ```C++
 pointer_name = (cast-type*) calloc(num_elems, size_elems);
 ```
-1. ```free``` is used to free up allocated memory ```free(pointer_name)```
+3. ```free``` is used to free up allocated memory ```free(pointer_name)```
 
 ### Using new and delete
 ### Typical Memory management problems
