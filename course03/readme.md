@@ -142,19 +142,19 @@ We are unable to use the entire address space.
 ### Using malloc and free
 **Allocating Dynamic Memory on the heap**
 There are two ways of allocating contiguous block of memory on the heap. *If the space is insufficient, returns NULL pointer.*
-1. **malloc** is used to dynamically allocate a single large block of memory
+1. ```malloc``` is used to dynamically allocate a single large block of memory
 ```C++
 pointer_name = (cast-type*) malloc(size);
 ```
-  - **realloc** can be used to grow memory size without overwriting data
+  - ```realloc``` can be used to grow memory size without overwriting data
   ```C++
   pointer_name = (cast-type*) realloc(pointer_name, new_size);
   ```
-1. **calloc** is used to dynamically allocate the specified number of blocks of memory of the specified type. Each block is initialized to zero.
+1. ```calloc``` is used to dynamically allocate the specified number of blocks of memory of the specified type. Each block is initialized to zero.
 ```C++
 pointer_name = (cast-type*) calloc(num_elems, size_elems);
 ```
-1. ```free``` is used to free up allocated memory ```C++ free(pointer_name)```
+1. ```free``` is used to free up allocated memory ```free(pointer_name)```
 
 ### Using new and delete
 ### Typical Memory management problems
