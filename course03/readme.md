@@ -146,17 +146,31 @@ There are two ways of allocating contiguous block of memory on the heap. *If the
 ```C++
 pointer_name = (cast-type*) malloc(size);
 ```
-  - ```realloc``` can be used to grow memory size without overwriting data
-  ```C++
-  pointer_name = (cast-type*) realloc(pointer_name, new_size);
-  ```
 2. ```calloc``` is used to dynamically allocate the specified number of blocks of memory of the specified type. Each block is initialized to zero.
 ```C++
 pointer_name = (cast-type*) calloc(num_elems, size_elems);
 ```
-3. ```free``` is used to free up allocated memory ```free(pointer_name)```
+3. ```realloc``` can be used to grow memory size without overwriting data
+```C++
+pointer_name = (cast-type*) realloc(pointer_name, new_size);
+```
+4. ```free``` is used to free up allocated memory ```free(pointer_name)```
+  - can only release memory that was reserved by ```malloc``` or ```calloc```
+  - can only release memory that hasn't been released before. Releasing same block of memory twice will result in error.
 
 ### Using new and delete
+- ```new/delete are operators``` while ```malloc/calloc/realloc/free are functions``` this allows operator overloading for ```new/delete```
+- new/delete are the object-oriented counterpart to memory management with malloc/free
+#### Major differences between malloc/free and new/delete
+- new/delete call the constructor/destructor while malloc/free don't
+- ```malloc``` returns a ```void``` which needs to be type -casted
+```C++
+// Malloc example
+MyObject *p = (MyObject*)malloc(sizeof(int))
+
+// "new" syntax
+MyObject *p = new MyObject()
+```
 ### Typical Memory management problems
 ### Memory leaks
 
