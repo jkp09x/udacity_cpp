@@ -166,13 +166,59 @@ pointer_name = (cast-type*) realloc(pointer_name, new_size);
 - ```malloc``` returns a ```void``` which needs to be type -casted
 ```C++
 // Malloc example
-MyObject *p = (MyObject*)malloc(sizeof(int))
-
-// "new" syntax
-MyObject *p = new MyObject()
+MyObject *p_malloc = (MyObject*)malloc(sizeof(int));
+// cleanup of memory allocated using "malloc"
+free(p_malloc);
+// "new" syntax - returns correct type automatically - it is type-safe
+MyObject *p_new = new MyObject();
+// cleanup of memory allocated using "new"
+delete p_new;
 ```
+##### Optimizing Performance with placement new
+Separating allocation from construction can significantly improve performance. This can be done using ```placement new``` syntax as follows
+```C++
+void *memory = malloc(size of MyClass));
+MyClass *object = new (memory); // placement new
+MyClass;
+//deleting "placement new" memory
+object->~MyClass();
+free(memory);
+```
+##### Reasons for overloading ```new``` and ```delete```
+1. Overloaded new operator functions allows to add additional parameters giving programmer more flexibility in customizing the memory allocation for objects.
+2. Provides an easy way to integrate a mechanism similar to garbage collections (such as java)
+3. Code can be made more robust by adding exception handling capabilities into ```new/delete```
+4. It is easy to add customized behavior, ex. overwriting deallocated memory with zeros to improve security of critical application data
+
 ### Typical Memory management problems
-### Memory leaks
+| Operating System | Debugging Tools | Example command |
+| :--- | :--- | :--- |
+| Linux/MacOS | [Valgrind](https://valgrind.org/) | ```valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=./bin/valgrind-out.txt <cpp_executable_filename>``` |
+| Windows | [Visual Studio](https://visualstudio.microsoft.com/downloads/) and [C Run-time Library (CRT)](https://learn.microsoft.com/en-us/visualstudio/debugger/finding-memory-leaks-using-the-crt-library?view=vs-2019) | |
+
+1. Memory leaks
+  - occur when data is allocated in the heap at runtime but not properly deallocated.
+  - program that forgets to clear a memory block is said to have a memory leaks
+  - if a program runs for a short time, memory leaks are not a significant problem
+  - memory leaks are a problem when a program has a long runtime or uses a large data structure, this can fill the heap causing a program crash
+2. Buffer overruns
+  - occur when memory outside the allocated limits is overwritten.
+  - this effect may not be visible immediately
+  - sometimes leads to injecting malicious code into program
+3. Uninitialized memory
+  - based on the compiler data structures sometimes are not initialized, this can cause issues since there might be garbage values in that memory location
+  - Generally variable will be automatically initialized if
+    - the default constructor initializes all primitive types
+    - array initializer syntax is used int ```a[10] = {};```
+    - it is a global or extern variable
+    - it is defined as ```static```
+4. Incorrect pairing of allocation and deallocation
+  - freeing block of memory more than once
+  - freeing block of memory that has not been allocated
+  - using ```malloc() & delete``` or ```new & free()``` can also cause improper pairings
+5. Invalid Memory Access
+  - Occurs when trying to access a block of heap memory that has not yet or has been deallocated
+
 
 ## Resource Copying Policies
 ### Copy semantics
