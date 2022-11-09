@@ -223,17 +223,20 @@ free(memory);
 ### Copy semantics
 - Default assignment operator creates a duplicate copy of all the member variables inside the object
 - Default behavior of both the ```copy constructor``` and ```assignment operator``` is to perform a **shallow copy**
-
-![Shallow Copy](/images/resourceCopy_shallowCopy.png)
+  |![Shallow Copy](/images/resourceCopy_shallowCopy.png) |![Deep Copy](/images/resourceCopy_deepCopy.png) |
+  | :---: | :---: |
 
 - Different Copy Policies
-1. Default copying
-2. No Copying
-3. Exclusive ownership
-4. Deep copying
-5. Shared Ownership
+  1. Default copying (a.k.a Shallow Copy)
+  2. No Copying
+  3. Exclusive ownership
+  4. Deep copying
+  5. Shared Ownership
 
 #### Default Copy - Copy Semantics Code provided by Udacity C++ Nanodegree
+<details>
+  <summary style="color:MediumSeaGreen;font-size:80%;"><b>Sample Code - Exclusive Ownership</b></summary>
+
 ```C++
 #include <iostream>
 
@@ -268,44 +271,226 @@ int main()
     return 0;
 }
 ```
+</details>
 
 #### NoCopy Policy - Copy Semantics Code provided by Udacity C++ Nanodegree
 - This is the simplest policy in which all copying and assignment is forbidden.
 - This is achieved by declaring but not defining a private copy constructor (see ```NoCopyClass1```) and assignment operator or alternatively by making both public and assigning the ```delete``` operator (see ```NoCopyClass2```).
 - On compiling the code will generate an error which indicates that both cases effectively prevent the original object from being copied/assigned.
 
-```C++
-class NoCopyClass1
-{
-private:
-    NoCopyClass1(const NoCopyClass1 &);
-    NoCopyClass1 &operator=(const NoCopyClass1 &);
+<details>
+  <summary style="color:MediumSeaGreen;font-size:80%;"><b>Sample Code - No Policy</b></summary>
 
-public:
-    NoCopyClass1(){};
-};
-class NoCopyClass2
-{
-public:
-    NoCopyClass2(){}
-    NoCopyClass2(const NoCopyClass2 &) = delete;
-    NoCopyClass2 &operator=(const NoCopyClass2 &) = delete;
-};
-int main()
-{
-    NoCopyClass1 original1;
-    NoCopyClass1 copy1a(original1); // copy c’tor
-    NoCopyClass1 copy1b = original1; // assigment operator
+  ```C++
+  class NoCopyClass1
+  {
+  private:
+      NoCopyClass1(const NoCopyClass1 &);
+      NoCopyClass1 &operator=(const NoCopyClass1 &);
 
-    NoCopyClass2 original2;
-    NoCopyClass2 copy2a(original2); // copy c’tor
-    NoCopyClass2 copy2b = original2; // assigment operator
+  public:
+      NoCopyClass1(){};
+  };
+  class NoCopyClass2
+  {
+  public:
+      NoCopyClass2(){}
+      NoCopyClass2(const NoCopyClass2 &) = delete;
+      NoCopyClass2 &operator=(const NoCopyClass2 &) = delete;
+  };
+  int main()
+  {
+      NoCopyClass1 original1;
+      NoCopyClass1 copy1a(original1); // copy c’tor
+      NoCopyClass1 copy1b = original1; // assigment operator
 
-    return 0;
-}
-```
-#### NoCopy Policy - Copy Semantics Code provided by Udacity C++ Nanodegree
+      NoCopyClass2 original2;
+      NoCopyClass2 copy2a(original2); // copy c’tor
+      NoCopyClass2 copy2b = original2; // assigment operator
 
+      return 0;
+  }
+  ```
+
+</details>
+
+#### Exclusive Ownership - Copy Semantics Code provided by Udacity C++ Nanodegree
+- This policy states that whenever a resource management object is copied, the resource handle is transferred from the **source pointer** to the **destination pointer** and the **source pointer** is set to ```null```
+- The resource handle belongs to only one single object at any time
+
+<details>
+  <summary style="color:MediumSeaGreen;font-size:80%;"><b>Sample Code - Exclusive Ownership</b></summary>
+
+  ```C++
+  #include <iostream>
+
+  class ExclusiveCopy
+  {
+  private:
+      int *_myInt;
+
+  public:
+      ExclusiveCopy()
+      {
+          _myInt = (int *)malloc(sizeof(int));
+          std::cout << "resource allocated" << std::endl;
+      }
+      ~ExclusiveCopy()
+      {
+          if (_myInt != nullptr)
+          {
+              free(_myInt);
+              std::cout << "resource freed" << std::endl;
+          }
+
+      }
+      ExclusiveCopy(ExclusiveCopy &source)
+      {
+          _myInt = source._myInt;
+          source._myInt = nullptr;
+      }
+      ExclusiveCopy &operator=(ExclusiveCopy &source)
+      {
+          _myInt = source._myInt;
+          source._myInt = nullptr;
+          return *this;
+      }
+  };
+
+  int main()
+  {
+      ExclusiveCopy source;
+      ExclusiveCopy destination(source);
+
+      return 0;
+  }
+  ```
+
+</details>
+
+#### Deep Copying - Copy Semantics Code provided by Udacity C++ Nanodegree
+- This policy ensures that copying and assigning class instances to each other can be done without the danger of resource conflicts.
+- Proprietary memory is allocated in the destination object and then copy the content of the source into the allocated memory block
+- This approach increases memory demands, after a deep copy two versions of the same resource exist in memory.
+
+<details>
+  <summary style="color:MediumSeaGreen;font-size:80%;"><b>Sample Code - Deep Copying</b></summary>
+
+  ```C++
+  #include <iostream>
+
+  class DeepCopy
+  {
+  private:
+      int *_myInt;
+
+  public:
+      DeepCopy(int val)
+      {
+          _myInt = (int *)malloc(sizeof(int));
+          *_myInt = val;
+          std::cout << "resource allocated at address " << _myInt << " with _myInt = " << *_myInt << std::endl;
+      }
+      ~DeepCopy()
+      {
+          free(_myInt);
+          std::cout << "resource freed at address " << _myInt << std::endl;
+      }
+      DeepCopy(DeepCopy &source)
+      {
+          _myInt = (int *)malloc(sizeof(int));
+          *_myInt = *source._myInt;
+          std::cout << "resource allocated at address " << _myInt << " with _myInt = " << *_myInt << std::endl;
+      }
+      DeepCopy &operator=(DeepCopy &source)
+      {
+          _myInt = (int *)malloc(sizeof(int));
+          std::cout << "resource allocated at address " << _myInt << " with _myInt=" << *_myInt << std::endl;
+          *_myInt = *source._myInt;
+          return *this;
+      }
+  };
+
+  int main()
+  {
+      DeepCopy source(42);
+      DeepCopy dest1(source);
+      DeepCopy dest2 = dest1;
+
+      return 0;
+  }
+
+  ```
+</details>
+
+#### Shared Ownership - Copy Semantics Code provided by Udacity C++ Nanodegree
+- This policy type performs a copy or assignment similar to the default behavior while at the same time keeping track of the number of instances that point to the object.
+- Each time an instance goes out of scope, the counter is decremented.
+- The memory is freed only when the last object is about to be deleted.
+- **NOTE**: the class SharedCopy does not implement the assignment operator. This is a violation of the **Rule of Three** (see below) and thus, if we were to use something like ```destination3 = source``` instead of ```SharedCopy destination3(source)```, the counter variable would not be properly decremented.
+<details>
+  <summary style="color:MediumSeaGreen;font-size:80%;"><b>Sample Code - Shared Ownership</b></summary>
+
+  ```C++
+  #include <iostream>
+
+  class SharedCopy
+  {
+  private:
+      int *_myInt;
+      static int _cnt;
+
+  public:
+      SharedCopy(int val);
+      ~SharedCopy();
+      SharedCopy(SharedCopy &source);
+  };
+
+  int SharedCopy::_cnt = 0;
+
+  SharedCopy::SharedCopy(int val)
+  {
+      _myInt = (int *)malloc(sizeof(int));
+      *_myInt = val;
+      ++_cnt;
+      std::cout << "resource allocated at address " << _myInt << std::endl;
+  }
+
+  SharedCopy::~SharedCopy()
+  {
+      --_cnt;
+      if (_cnt == 0)
+      {
+          free(_myInt);
+          std::cout << "resource freed at address " << _myInt << std::endl;
+      }
+      else
+      {
+          std::cout << "instance at address " << this << " goes out of scope with _cnt = " << _cnt << std::endl;
+      }
+  }
+
+  SharedCopy::SharedCopy(SharedCopy &source)
+  {
+      _myInt = source._myInt;
+      ++_cnt;
+      std::cout << _cnt << " instances with handles to address " << _myInt << " with _myInt = " << *_myInt << std::endl;
+  }
+
+  int main()
+  {
+      SharedCopy source(42);
+      SharedCopy destination1(source);
+      SharedCopy destination2(source);
+      SharedCopy destination3(source);
+
+      return 0;
+  }
+  ```
+</details>
+
+#### Rule of Three
+This rule states that if a class needs to have an overloaded ```copy constructor``` ```copy assignment operator``` or ```destructor``` then it must also implement the other two
 
 ### Lvalues and Rvalues
 ### Move semantics
