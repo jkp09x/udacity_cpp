@@ -219,9 +219,94 @@ free(memory);
 5. Invalid Memory Access
   - Occurs when trying to access a block of heap memory that has not yet or has been deallocated
 
-
 ## Resource Copying Policies
 ### Copy semantics
+- Default assignment operator creates a duplicate copy of all the member variables inside the object
+- Default behavior of both the ```copy constructor``` and ```assignment operator``` is to perform a **shallow copy**
+
+![Shallow Copy](/images/resourceCopy_shallowCopy.png)
+
+- Different Copy Policies
+1. Default copying
+2. No Copying
+3. Exclusive ownership
+4. Deep copying
+5. Shared Ownership
+
+#### Default Copy - Copy Semantics Code provided by Udacity C++ Nanodegree
+```C++
+#include <iostream>
+
+class MyClass
+{
+private:
+    int *_myInt;
+public:
+    MyClass()
+    {
+        _myInt = (int *)malloc(sizeof(int));
+    };
+    ~MyClass()
+    {
+        free(_myInt);
+    };
+    void printOwnAddress() { std::cout << "Own address on the stack is " << this << std::endl; }
+    void printMemberAddress() { std::cout << "Managing memory block on the heap at " << _myInt << std::endl; }
+};
+int main()
+{
+    // instantiate object 1
+    MyClass myClass1;
+    myClass1.printOwnAddress();
+    myClass1.printMemberAddress();
+
+    // copy object 1 into object 2
+    MyClass myClass2(myClass1); // default copy constructor - shallow copy
+    myClass2.printOwnAddress();
+    myClass2.printMemberAddress();
+
+    return 0;
+}
+```
+
+#### NoCopy Policy - Copy Semantics Code provided by Udacity C++ Nanodegree
+- This is the simplest policy in which all copying and assignment is forbidden.
+- This is achieved by declaring but not defining a private copy constructor (see ```NoCopyClass1```) and assignment operator or alternatively by making both public and assigning the ```delete``` operator (see ```NoCopyClass2```).
+- On compiling the code will generate an error which indicates that both cases effectively prevent the original object from being copied/assigned.
+
+```C++
+class NoCopyClass1
+{
+private:
+    NoCopyClass1(const NoCopyClass1 &);
+    NoCopyClass1 &operator=(const NoCopyClass1 &);
+
+public:
+    NoCopyClass1(){};
+};
+class NoCopyClass2
+{
+public:
+    NoCopyClass2(){}
+    NoCopyClass2(const NoCopyClass2 &) = delete;
+    NoCopyClass2 &operator=(const NoCopyClass2 &) = delete;
+};
+int main()
+{
+    NoCopyClass1 original1;
+    NoCopyClass1 copy1a(original1); // copy c’tor
+    NoCopyClass1 copy1b = original1; // assigment operator
+
+    NoCopyClass2 original2;
+    NoCopyClass2 copy2a(original2); // copy c’tor
+    NoCopyClass2 copy2b = original2; // assigment operator
+
+    return 0;
+}
+```
+#### NoCopy Policy - Copy Semantics Code provided by Udacity C++ Nanodegree
+
+
 ### Lvalues and Rvalues
 ### Move semantics
 ### Using move semantics
