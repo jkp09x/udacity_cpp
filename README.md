@@ -5,7 +5,7 @@
   Create a route planner that plots a path between two points on a map using real map data from the [OpenStreeMap project](https://www.openstreetmap.org/).
 - #### ✅ [Project 2 - System Monitor](https://github.com/jkp09x/udacity-system_monitor)
   Created a system monitor (similar to Linux htop command) that shows what's happening on the computer: processes, id, CPU & Memory usage and much more using object-oriented C++ concepts.
-- #### 🗓 [Project 3 - Memory Mgmt Chatbot]()
+- #### 🗓 [Project 3 - Memory Mgmt Chatbot](https://github.com/jkp09x/udacity-memory_management_chatbot)
   **Purpose:** In this project you will analyze and modify an existing ChatBot program, which is able to discuss some memory management topics based on the content of a knowledge base. The program can be executed and works as intended. However, no advanced concepts as discussed in this course have been used. There are no smart pointers, no move semantics and not much thought has been given on ownership and on memory allocation.
   
   **Your task:** Use the course knowledge to optimize the ChatBot program from a memory management perspective. There is a total of five tasks to be completed.
