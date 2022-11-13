@@ -725,18 +725,17 @@ The technique of wrapping a management class around a resource is called Resourc
     - hold a non-owning reference to an object that is managed by another shared pointer.
     - You can only create weak pointers out of shared pointers or out of another weak pointer.
   4. Converting between smart pointers
+    - In (1), a conversion from ```unique pointer``` to ```shared pointer``` is performed.
+      - You can see that this can be achieved by using ```std::move```, which calls the move assignment operator on ```sharedPtr1``` and steals the resource from ```uniquePtr```
+      - invalidating its resource handle on the heap-allocated integer.
+    - In (2), you can see how to convert from ```weak pointer``` to ```shared pointer```.
+      - Imagine that you have been passed a weak pointer to a memory object which you want to work on. To avoid invalid memory access, you want to make sure that the object will not be deallocated before your work on it has been finished. To do this, you can convert a weak pointer to a shared pointer by calling the ```lock()``` function on the weak pointer.
+    - In (3), a ```raw pointer``` is extracted from a ```shared pointer```.
+      - this operation does not decrease the reference count within ```sharedPtr2```. This means that calling ```delete``` on rawPtr in the last line before main returns will generate a runtime error as a resource is trying to be deleted which is managed by sharedPtr2 and has already been removed.
+
     <details open>
       <summary style="color:MediumSeaGreen;font-size:80%;">
         <b>Code sample</b>
-
-          1. In (1), a conversion from unique pointer to shared pointer is performed.
-            - You can see that this can be achieved by using std::move, which calls the move assignment operator on sharedPtr1 and steals the resource from uniquePtr
-            - invalidating its resource handle on the heap-allocated integer.
-          2. In (2), you can see how to convert from weak to shared pointer.
-            - Imagine that you have been passed a weak pointer to a memory object which you want to work on. To avoid invalid memory access, you want to make sure that the object will not be deallocated before your work on it has been finished. To do this, you can convert a weak pointer to a shared pointer by calling the lock() function on the weak pointer.
-          3. In (3), a raw pointer is extracted from a shared pointer.
-            - this operation does not decrease the reference count within sharedPtr2. This means that calling delete on rawPtr in the last line before main returns will generate a runtime error as a resource is trying to be deleted which is managed by sharedPtr2 and has already been removed.
-
       </summary>
 
       ```C++
