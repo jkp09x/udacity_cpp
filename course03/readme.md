@@ -623,6 +623,119 @@ This rule states that if a class needs to have an overloaded ```copy constructor
 
 ## Smart Pointers
 ### Resource Acquisition is Initialization (RAII)
+
+<style>
+img {
+  border: 2px solid #000;
+}
+</style>
+<img src="/images/raii.png" width="400">
+
+The technique of wrapping a management class around a resource is called Resource Acquisition Is Initialization (RAII).
+
+- RAII can be used to leverage - among others - the following advantages:
+  - Use class destructors to perform resource clean-up tasks such as proper memory deallocation when the RAII object gets out of scope
+  - Manage ownership and lifetime of dynamically allocated objects
+  - Implement encapsulation and information hiding due to resource acquisition and release being performed within the same object.
+- RAII from the perspective of memory management
+  - A resource is allocated in the constructor of the RAII class
+  - The resource is deallocated in the destructor
+  - All instances of the RAII class are allocated on the stack to reliably control the lifetime via the object scope
+
+<details>
+  <summary style="color:MediumSeaGreen;font-size:80%;">
+  <b>RAII Code Example: Shows that we successfully used the RAII idiom to create a memory management class that spares us from thinking about calling delete. By creating the </b><code>MyInt</code> <b>object on the stack, we ensure that the deallocation occurs as soon as the object goes out of scope. </b></summary>
+
+  ```C++
+  #include <iostream>
+
+  class MyInt
+  {
+      int *_p; // pointer to heap data
+  public:
+      MyInt(int *p = NULL) { _p = p; }
+      ~MyInt()
+      {
+          std::cout << "resource " << *_p << " deallocated" << std::endl;
+          delete _p;
+      }
+      int &operator*() { return *_p; } // // overload dereferencing operator
+  };
+
+  int main()
+  {
+      double den[] = {1.0, 2.0, 3.0, 4.0, 5.0};
+      for (size_t i = 0; i < 5; ++i)
+      {
+          // allocate the resource on the stack
+          MyInt en(new int(i));
+
+          // use the resource
+          std::cout << *en << "/" << den[i] << " = " << *en / den[i] << std::endl;
+      }
+
+      return 0;
+  }
+  ```
+</details>
+
 ### Smart Pointers
+- C++11 has introduced three types of smart pointers, which are defined in the header of the standard library:
+  1. The unique pointer ```std::unique_ptr```
+    - smart pointer which exclusively owns a dynamically allocated resource on the heap.
+    - There must not be a second unique pointer to the same resource.
+    - Unique pointers are useful when working with a temporary heap resource that is no longer needed once it goes out of scope.
+  2. The shared pointer ```std::shared_ptr```
+    - points to a heap resource but does not explicitly own it.
+    - There may even be several shared pointers to the same resource
+      - each of which will increase an internal reference count.
+      - As soon as this count reaches zero, the resource will automatically be deallocated.
+  3. The weak pointer ```std::weak_ptr```
+    - behaves similar to the shared pointer but does not increase the reference counter.
+
+  <table>
+  <tr>
+  <td> Image </td> <td> Sample Code </td>
+  </tr>
+  <tr>
+  <td> <img src="/images/smartPtr_uniquePtr.png" width="400"> </td>
+  <td>
+
+  ```C++
+  #include <memory>
+
+  void RawPointer()
+  {
+      int *raw = new int; // create a raw pointer on the heap
+      *raw = 1; // assign a value
+      delete raw; // delete the resource again
+  }
+
+  void UniquePointer()
+  {
+      std::unique_ptr<int> unique(new int); // create a unique pointer on the stack
+      *unique = 2; // assign a value
+      // delete is not neccessary
+  }
+  ```
+  </td>
+  <tr>
+  <td> <img src="/images/smartPtr_sharedPtr.png" width="400"> </td>
+  <td>
+
+  ```C++
+  ```
+  </td>
+  </tr>
+  <tr>
+  <td> <img src="/images/smartPtr_weakPtr.png" width="400"> </td>
+  <td>
+
+  ```C++
+  ```
+  </td>
+  </tr>
+  </table>
+
 ### Transferring ownership
 ### Importance of Scope
