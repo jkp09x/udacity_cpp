@@ -680,7 +680,7 @@ The technique of wrapping a management class around a resource is called Resourc
 </details>
 
 ### Smart Pointers
-- C++11 has introduced three types of smart pointers, which are defined in the header of the standard library:
+C++11 has introduced three types of smart pointers, which are defined in the header of the standard library:
   1. The unique pointer ```std::unique_ptr```
     - smart pointer which exclusively owns a dynamically allocated resource on the heap.
     - There must not be a second unique pointer to the same resource.
@@ -694,7 +694,7 @@ The technique of wrapping a management class around a resource is called Resourc
     - Shared pointers can get into a **Deadlock** state. This is when there is some type of circular dependency between objects that prevents them from being cleaned up correctly. See code example below.
       <details open>
         <summary style="color:MediumSeaGreen;font-size:80%;">
-        <b>Deadlock state: </b><code>myClass1->_member = myClass2</code><b> increments the ref count (same with the </b><code>myClass2->_member = myClass1</code><b>) causing a memory leak since the destructor is not called. When <code>myClass1</code> goes out of scope in main, its destructor can’t clean up memory as there is still a reference count of 1 in the smart pointer, which is caused by the shared pointer _member in <code>myClass2</code>. To avoid this </b><code>std::weak_ptr</code><b> is used instead.</b></summary>
+        <i>Deadlock state: </i><code>myClass1->_member = myClass2</code><i> increments the ref count (same with the </i><code>myClass2->_member = myClass1</code><i>) causing a memory leak since the destructor is not called. When <code>myClass1</code> goes out of scope in main, its destructor can’t clean up memory as there is still a reference count of 1 in the smart pointer, which is caused by the shared pointer _member in <code>myClass2</code>. To avoid this </i><code>std::weak_ptr</code><i> is used instead.</i></summary>
 
         ```C++
         #include <iostream>
@@ -735,7 +735,7 @@ The technique of wrapping a management class around a resource is called Resourc
 
     <details open>
       <summary style="color:MediumSeaGreen;font-size:80%;">
-        <b>Code sample</b>
+        <i>Code sample</i>
       </summary>
 
       ```C++
