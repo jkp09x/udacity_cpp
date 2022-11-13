@@ -680,7 +680,7 @@ The technique of wrapping a management class around a resource is called Resourc
 </details>
 
 ### Smart Pointers
-- C++11 has introduced three types of smart pointers, which are defined in the header of the standard library:
+C++11 has introduced three types of smart pointers, which are defined in the header of the standard library:
   1. The unique pointer ```std::unique_ptr```
     - smart pointer which exclusively owns a dynamically allocated resource on the heap.
     - There must not be a second unique pointer to the same resource.
