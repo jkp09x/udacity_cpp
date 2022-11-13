@@ -715,7 +715,7 @@ The technique of wrapping a management class around a resource is called Resourc
   {
       std::unique_ptr<int> unique(new int); // create a unique pointer on the stack
       *unique = 2; // assign a value
-      // delete is not neccessary
+      // delete is not necessary
   }
   ```
   </td>
