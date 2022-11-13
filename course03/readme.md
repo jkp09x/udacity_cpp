@@ -234,7 +234,7 @@ free(memory);
   5. Shared Ownership
 
 #### Default Copy - Copy Semantics Code provided by Udacity C++ Nanodegree
-<details>
+<details open>
   <summary style="color:MediumSeaGreen;font-size:80%;"><b>Sample Code - Exclusive Ownership</b></summary>
 
 ```C++
@@ -278,7 +278,7 @@ int main()
 - This is achieved by declaring but not defining a private copy constructor (see ```NoCopyClass1```) and assignment operator or alternatively by making both public and assigning the ```delete``` operator (see ```NoCopyClass2```).
 - On compiling the code will generate an error which indicates that both cases effectively prevent the original object from being copied/assigned.
 
-<details>
+<details open>
   <summary style="color:MediumSeaGreen;font-size:80%;"><b>Sample Code - No Policy</b></summary>
 
   ```C++
@@ -318,7 +318,7 @@ int main()
 - This policy states that whenever a resource management object is copied, the resource handle is transferred from the **source pointer** to the **destination pointer** and the **source pointer** is set to ```null```
 - The resource handle belongs to only one single object at any time
 
-<details>
+<details open>
   <summary style="color:MediumSeaGreen;font-size:80%;"><b>Sample Code - Exclusive Ownership</b></summary>
 
   ```C++
@@ -373,7 +373,7 @@ int main()
 - Proprietary memory is allocated in the destination object and then copy the content of the source into the allocated memory block
 - This approach increases memory demands, after a deep copy two versions of the same resource exist in memory.
 
-<details>
+<details open>
   <summary style="color:MediumSeaGreen;font-size:80%;"><b>Sample Code - Deep Copying</b></summary>
 
   ```C++
@@ -428,7 +428,7 @@ int main()
 - Each time an instance goes out of scope, the counter is decremented.
 - The memory is freed only when the last object is about to be deleted.
 - **NOTE**: the class SharedCopy does not implement the assignment operator. This is a violation of the **Rule of Three** (see below) and thus, if we were to use something like ```destination3 = source``` instead of ```SharedCopy destination3(source)```, the counter variable would not be properly decremented.
-<details>
+<details open>
   <summary style="color:MediumSeaGreen;font-size:80%;"><b>Sample Code - Shared Ownership</b></summary>
 
   ```C++
@@ -528,7 +528,7 @@ This rule states that if a class needs to have an overloaded ```copy constructor
   <br></br>
   <img src="/images/moveSemantics.png" width="400">
 
-<details>
+<details open>
   <summary style="color:MediumSeaGreen;font-size:80%;"><b>Example of move constructor and move operator=</b></summary>
 
   ```C++
@@ -642,7 +642,7 @@ The technique of wrapping a management class around a resource is called Resourc
   - The resource is deallocated in the destructor
   - All instances of the RAII class are allocated on the stack to reliably control the lifetime via the object scope
 
-<details>
+<details open>
   <summary style="color:MediumSeaGreen;font-size:80%;">
   <b>RAII Code Example: Shows that we successfully used the RAII idiom to create a memory management class that spares us from thinking about calling delete. By creating the </b><code>MyInt</code> <b>object on the stack, we ensure that the deallocation occurs as soon as the object goes out of scope. </b></summary>
 
@@ -684,14 +684,46 @@ The technique of wrapping a management class around a resource is called Resourc
   1. The unique pointer ```std::unique_ptr```
     - smart pointer which exclusively owns a dynamically allocated resource on the heap.
     - There must not be a second unique pointer to the same resource.
-    - Unique pointers are useful when working with a temporary heap resource that is no longer needed once it goes out of scope.
+    - **useful** when working with a temporary heap resource that is no longer needed once it goes out of scope.
   2. The shared pointer ```std::shared_ptr```
     - points to a heap resource but does not explicitly own it.
     - There may even be several shared pointers to the same resource
       - each of which will increase an internal reference count.
       - As soon as this count reaches zero, the resource will automatically be deallocated.
+    - **useful** for cases where you require access to a memory location on the heap in multiple parts of your program and you want to make sure that whoever owns a shared pointer to the memory can rely on the fact that it will be accessible throughout the lifetime of that pointer.
+    - Shared pointers can get into a **Deadlock** state. This is when there is some type of circular dependency between objects that prevents them from being cleaned up correctly. See code example below.
+      <details open>
+        <summary style="color:MediumSeaGreen;font-size:80%;">
+        <b>Deadlock state: </b><code>myClass1->_member = myClass2</code><b> increments the ref count (same with the </b><code>myClass2->_member = myClass1</code><b>) causing a memory leak since the destructor is not called. When <code>myClass1</code> goes out of scope in main, its destructor can’t clean up memory as there is still a reference count of 1 in the smart pointer, which is caused by the shared pointer _member in <code>myClass2</code>. To avoid this </b><code>std::weak_ptr</code><b> is used instead.</b></summary>
+
+        ```C++
+        #include <iostream>
+        #include <memory>
+
+        class MyClass
+        {
+        public:
+            std::shared_ptr<MyClass> _member;
+            ~MyClass() { std::cout << "Destructor of MyClass called" << std::endl; }
+        };
+
+        int main()
+        {
+            std::shared_ptr<MyClass> myClass1(new MyClass);
+            std::shared_ptr<MyClass> myClass2(new MyClass);
+
+            // These two lines produce a circular reference
+            myClass1->_member = myClass2;
+            myClass2->_member = myClass1;
+
+            return 0;
+        }
+        ```
+      </details>
   3. The weak pointer ```std::weak_ptr```
     - behaves similar to the shared pointer but does not increase the reference counter.
+    - hold a non-owning reference to an object that is managed by another shared pointer.
+    - You can only create weak pointers out of shared pointers or out of another weak pointer.
 
   <table>
   <tr>
@@ -724,6 +756,35 @@ The technique of wrapping a management class around a resource is called Resourc
   <td>
 
   ```C++
+  #include <iostream>
+  #include <memory>
+
+  class MyClass
+  {
+  public:
+      ~MyClass() { std::cout << "Destructor of MyClass called" << std::endl; }
+  };
+
+  int main()
+  {
+      std::shared_ptr<int> shared1(new int);
+      std::cout << "shared pointer count = " << shared1.use_count() << std::endl;
+
+      {
+          std::shared_ptr<int> shared2 = shared1;
+          std::cout << "shared pointer count = " << shared1.use_count() << std::endl;
+      }
+
+      std::cout << "shared pointer count = " << shared1.use_count() << std::endl;
+
+      std::shared_ptr<MyClass> shared(new MyClass);
+      std::cout << "shared pointer count = " << shared.use_count() << std::endl;
+
+      shared.reset(new MyClass);
+      std::cout << "shared pointer count = " << shared.use_count() << std::endl;
+
+      return 0;
+  }
   ```
   </td>
   </tr>
@@ -732,6 +793,43 @@ The technique of wrapping a management class around a resource is called Resourc
   <td>
 
   ```C++
+  #include <iostream>
+  #include <memory>
+
+  int main()
+  {
+      std::shared_ptr<int> mySharedPtr(new int);
+      std::cout << "shared pointer count = " << mySharedPtr.use_count() << std::endl;
+
+      std::weak_ptr<int> myWeakPtr1(mySharedPtr);
+      std::weak_ptr<int> myWeakPtr2(myWeakPtr1);
+      std::cout << "shared pointer count = " << mySharedPtr.use_count() << std::endl;
+
+      // std::weak_ptr<int> myWeakPtr3(new int); // COMPILE ERROR
+
+      return 0;
+  }
+  ```
+
+  Checking validity of a weak pointer.
+  ```C++
+  #include <iostream>
+  #include <memory>
+
+  int main()
+  {
+      std::shared_ptr<int> mySharedPtr(new int);
+      std::weak_ptr<int> myWeakPtr(mySharedPtr);
+
+      mySharedPtr.reset(new int);
+
+      if (myWeakPtr.expired() == true)
+      {
+          std::cout << "Weak pointer expired!" << std::endl;
+      }
+
+      return 0;
+  }
   ```
   </td>
   </tr>
