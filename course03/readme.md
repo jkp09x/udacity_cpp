@@ -732,6 +732,7 @@ C++11 has introduced three types of smart pointers, which are defined in the hea
       - Imagine that you have been passed a weak pointer to a memory object which you want to work on. To avoid invalid memory access, you want to make sure that the object will not be deallocated before your work on it has been finished. To do this, you can convert a weak pointer to a shared pointer by calling the ```lock()``` function on the weak pointer.
     - In (3), a ```raw pointer``` is extracted from a ```shared pointer```.
       - this operation does not decrease the reference count within ```sharedPtr2```. This means that calling ```delete``` on rawPtr in the last line before main returns will generate a runtime error as a resource is trying to be deleted which is managed by sharedPtr2 and has already been removed.
+    - Note that there are no options for converting away from a shared pointer. Once you have created a shared pointer, you must stick to it (or a copy of it) for the remainder of your program.
 
     <details open>
       <summary style="color:MediumSeaGreen;font-size:80%;">
@@ -874,6 +875,3 @@ C++11 has introduced three types of smart pointers, which are defined in the hea
   </td>
   </tr>
   </table>
-
-### Transferring ownership
-### Importance of Scope
